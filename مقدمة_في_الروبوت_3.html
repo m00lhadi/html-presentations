@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض تقديمي عن الروبوتات</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        
+        .presentation {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .slide {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.3s;
+        }
+        
+        .slide:hover {
+            transform: translateY(-5px);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #2980b9;
+            font-size: 1.8em;
+            margin-top: 20px;
+        }
+        
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+        
+        ul {
+            font-size: 1.2em;
+            line-height: 1.8;
+            padding-right: 20px;
+        }
+        
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .robot-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+        
+        .robot-image:hover {
+            transform: scale(1.03);
+        }
+        
+        .highlight {
+            background-color: #f8f4e5;
+            padding: 15px;
+            border-right: 4px solid #f39c12;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        
+        .activity {
+            background-color: #e8f4f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+        
+        .activity h3 {
+            color: #16a085;
+            margin-top: 0;
+        }
+        
+        .robot-types {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .robot-type {
+            flex: 1 1 300px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .robot-type h3 {
+            color: #27ae60;
+            text-align: center;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-button:hover {
+            background-color: #2980b9;
+        }
+        
+        .quiz {
+            background-color: #e8f8f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+        
+        .quiz h3 {
+            color: #1abc9c;
+        }
+        
+        .quiz-question {
+            margin-bottom: 15px;
+        }
+        
+        .quiz-options {
+            margin-right: 20px;
+        }
+        
+        .quiz-submit {
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .quiz-submit:hover {
+            background-color: #16a085;
+        }
+        
+        .quiz-result {
+            margin-top: 15px;
+            font-weight: bold;
+            display: none;
+        }
+        
+        .robot-innovation {
+            background-color: #f5e8f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+        
+        .robot-innovation h3 {
+            color: #9b59b6;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Introduction -->
+        <div class="slide" id="slide1">
+            <h1>الروبوتات: أجهزة ذكية لخدمة الإنسان</h1>
+            <div class="image-container">
+                <img src="https://img.freepik.com/free-vector/hand-drawn-robot-collection_23-2147748620.jpg" alt="روبوتات متنوعة" class="robot-image">
+            </div>
+            <p>الروبوت هو جهاز آلي ذكي يعمل أوتوماتيكياً نتيجة لبرمجته مسبقاً بأوامر تهدف إلى مساعدة الإنسان لأداء مهام مختلفة قد تكون صعبة أو متكررة أو غير آمنة أثناء تأديتها.</p>
+            <div class="highlight">
+                <p>أول روبوت في التاريخ اخترعه العالم المسلم أبو العز الجزري، حيث ابتكر العديد من الأجهزة الميكانيكية والآلات ذاتية الحركة مثل آلة الوضوء.</p>
+            </div>
+        </div>
+        
+        <!-- Slide 2: History -->
+        <div class="slide" id="slide2">
+            <h1>تاريخ الروبوتات</h1>
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Al-Jazari_water_device_1206.jpg/800px-Al-Jazari_water_device_1206.jpg" alt="اختراعات الجزري" class="robot-image" style="max-height: 300px;">
+            </div>
+            <h2>أبو العز الجزري</h2>
+            <p>هو عالم مسلم ومهندس ميكانيكي عاش في القرن الثاني عشر الميلادي. كان يعمل كرئيس المهندسين في ديار بكر.</p>
+            
+            <h2>إنجازاته:</h2>
+            <ul>
+                <li>اخترع آلة الوضوء الآلية التي تعتبر أول روبوت في التاريخ</li>
+                <li>صمم العديد من الأجهزة الميكانيكية ذاتية الحركة</li>
+                <li>ابتكر مضخات ماء متطورة وأنظمة هيدروليكية</li>
+                <li>كتب كتاب "الجامع بين العلم والعمل النافع في صناعة الحيل" الذي وصف فيه 100 جهاز ميكانيكي</li>
+            </ul>
+            
+            <div class="activity">
+                <h3>نشاط تفاعلي</h3>
+                <p>كلمة "روبوت" ظهرت لأول مرة في عام 1920 في مسرحية للكاتب التشيكي كارل تشابيك. ماذا تعني كلمة "روبوت" في اللغة التشيكية الأصلية؟</p>
+                <div class="quiz">
+                    <div class="quiz-question">
+                        <p>اختر الإجابة الصحيحة:</p>
+                        <div class="quiz-options">
+                            <input type="radio" name="quiz1" id="quiz1-1" value="1">
+                            <label for="quiz1-1">العمل الشاق</label><br>
+                            <input type="radio" name="quiz1" id="quiz1-2" value="2">
+                            <label for="quiz1-2">الآلة الذكية</label><br>
+                            <input type="radio" name="quiz1" id="quiz1-3" value="3">
+                            <label for="quiz1-3">الخادم المطيع</label>
+                        </div>
+                        <button class="quiz-submit" onclick="checkQuiz(1)">تحقق من الإجابة</button>
+                        <div class="quiz-result" id="quiz-result1">الإجابة الصحيحة: العمل الشاق. كلمة "روبوت" مشتقة من الكلمة التشيكية "robota" التي تعني العمل الشاق أو السخرة.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Types of Robots -->
+        <div class="slide" id="slide3">
+            <h1>أنواع الروبوتات</h1>
+            
+            <div class="robot-types">
+                <div class="robot-type">
+                    <h3>الروبوت الذراعي الميكانيكي</h3>
+                    <div class="image-container">
+                        <img src="https://img.freepik.com/free-photo/industrial-robot-arm-working-factory_53876-133727.jpg" alt="روبوت ذراعي" class="robot-image">
+                    </div>
+                    <p>ذراع آلي يشبه ذراع الإنسان، يستخدم بكثرة في المجال الصناعي لتنفيذ مهام دقيقة ومتكررة.</p>
+                </div>
+                
+                <div class="robot-type">
+                    <h3>الروبوت ذو العجلات</h3>
+                    <div class="image-container">
+                        <img src="https://img.freepik.com/free-photo/robot-with-wheels-artificial-intelligence-concept_23-2150405575.jpg" alt="روبوت بعجلات" class="robot-image">
+                    </div>
+                    <p>يتحرك على عجلات، مناسب للأرضيات المستوية، ويمكن توجيهه بتغيير سرعة العجلات.</p>
+                </div>
+            </div>
+            
+            <div class="robot-types">
+                <div class="robot-type">
+                    <h3>الروبوت ذو الأرجل</h3>
+                    <div class="image-container">
+                        <img src="https://img.freepik.com/free-photo/robot-walking-like-human_23-2150405584.jpg" alt="روبوت بأرجل" class="robot-image">
+                    </div>
+                    <p>يتحرك على عدة أرجل، مناسب للأسطح غير المنتظمة والتضاريس الوعرة.</p>
+                </div>
+                
+                <div class="robot-type">
+                    <h3>الروبوت المائي</h3>
+                    <div class="image-container">
+                        <img src="https://img.freepik.com/free-photo/underwater-robot-exploring-ocean-depths_23-2150912002.jpg" alt="روبوت مائي" class="robot-image">
+                    </div>
+                    <p>صمم للعمل تحت الماء، يستخدم في الاستكشافات البحرية وعمليات الإنقاذ.</p>
+                </div>
+            </div>
+            
+            <div class="robot-types">
+                <div class="robot-type">
+                    <h3>الروبوت الطائر</h3>
+                    <div class="image-container">
+                        <img src="https://img.freepik.com/free-photo/drone-flying-sky_23-2150751658.jpg" alt="روبوت طائر" class="robot-image">
+                    </div>
+                    <p>طائرة بدون طيار تستخدم في الأرصاد الجوية والتصوير الجوي والأغراض العسكرية.</p>
+                </div>
+                
+                <div class="robot-type">
+                    <h3>الروبوت الإنسان</h3>
+                    <div class="image-container">
+                        <img src="https://img.freepik.com/free-photo/humanoid-robot-using-digital-tablet_53876-94841.jpg" alt="روبوت إنسان" class="robot-image">
+                    </div>
+                    <p>يشبه الإنسان في الشكل والحركة، قادر على التفاعل مع البشر وأداء مهام متعددة.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Applications -->
+        <div class="slide" id="slide4">
+            <h1>مجالات استخدام الروبوتات</h1>
+            
+            <div class="image-container">
+                <img src="https://img.freepik.com/free-vector/robots-different-professions_74855-5305.jpg" alt="روبوتات في مجالات مختلفة" class="robot-image">
+            </div>
+            
+            <h2>أهم مجالات استخدام الروبوتات:</h2>
+            <ul>
+                <li><strong>الصناعة:</strong> خاصة في صناعة السيارات والأجهزة الإلكترونية</li>
+                <li><strong>الزراعة:</strong> زراعة البذور، رش المبيدات، حصاد المحاصيل</li>
+                <li><strong>الطب:</strong> الجراحة الدقيقة، تقديم الرعاية للمرضى</li>
+                <li><strong>الفضاء:</strong> استكشاف الكواكب والأجرام السماوية</li>
+                <li><strong>الخدمات:</strong> التنظيف، تقديم الطعام، الاستقبال في الفنادق</li>
+                <li><strong>التعليم:</strong> مساعدة الطلاب في التعلم</li>
+            </ul>
+            
+            <div class="highlight">
+                <p>اليابان من أشهر الدول المتقدمة في مجال الروبوتات الخدمية التي تسهل الحياة اليومية للإنسان.</p>
+            </div>
+            
+            <div class="activity">
+                <h3>فكر وناقش</h3>
+                <p>هل يمكن أن تكون هناك تحديات أو سلبيات نتيجة لاستخدام الروبوت في بعض المجالات؟ كيف؟</p>
+                <textarea style="width: 100%; min-height: 80px; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-family: Tajawal;" placeholder="اكتب أفكارك هنا..."></textarea>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Innovation -->
+        <div class="slide" id="slide5">
+            <h1>الابتكار في عالم الروبوتات</h1>
+            
+            <div class="robot-innovation">
+                <h3>نشاط: ابتكر روبوتًا</h3>
+                <p>اقترح فكرة مبتكرة لروبوت يخدم البيئة أو يحل مشكلة قائمة في منطقتك:</p>
+                
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 300px;">
+                        <h4>مواصفات الروبوت المقترح:</h4>
+                        <ul>
+                            <li><strong>الشكل:</strong> <input type="text" placeholder="صِف الشكل" style="padding: 5px; border-radius: 3px; border: 1px solid #ccc; width: 80%;"></li>
+                            <li><strong>النوع:</strong> <input type="text" placeholder="نوع الروبوت" style="padding: 5px; border-radius: 3px; border: 1px solid #ccc; width: 80%;"></li>
+                            <li><strong>البيئة:</strong> <input type="text" placeholder="أين سيعمل؟" style="padding: 5px; border-radius: 3px; border: 1px solid #ccc; width: 80%;"></li>
+                            <li><strong>الهدف:</strong> <input type="text" placeholder="ما الهدف منه؟" style="padding: 5px; border-radius: 3px; border: 1px solid #ccc; width: 80%;"></li>
+                            <li><strong>المستفيدون:</strong> <input type="text" placeholder="من سيستفيد؟" style="padding: 5px; border-radius: 3px; border: 1px solid #ccc; width: 80%;"></li>
+                        </ul>
+                    </div>
+                    
+                    <div style="flex: 1; min-width: 300px;">
+                        <div class="image-container">
+                            <img src="https://img.freepik.com/free-vector/robot-design-concept-illustration_114360-2599.jpg" alt="تصميم روبوت" class="robot-image" style="max-height: 250px;">
+                        </div>
+                        <p style="text-align: center;">ارسم أو صف شكل الروبوت المقترح</p>
+                    </div>
+                </div>
+                
+                <button class="nav-button" style="background-color: #9b59b6; display: block; margin: 20px auto;">حفظ الاقتراح</button>
+            </div>
+            
+            <div class="highlight">
+                <p>شاهد مقطع فيديو عن استخدامات الروبوتات:</p>
+                <div style="text-align: center; margin: 20px 0;">
+                    <button class="nav-button" onclick="alert('سيتم فتح فيديو عن استخدامات الروبوتات')">عرض الفيديو</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nav-buttons">
+            <button class="nav-button" onclick="prevSlide()">السابق</button>
+            <button class="nav-button" onclick="nextSlide()">التالي</button>
+        </div>
+    </div>
+    
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 5;
+        
+        function showSlide(n) {
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.style.display = 'none';
+            });
+            document.getElementById('slide' + n).style.display = 'block';
+            currentSlide = n;
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                showSlide(currentSlide + 1);
+            } else {
+                showSlide(1);
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 1) {
+                showSlide(currentSlide - 1);
+            } else {
+                showSlide(totalSlides);
+            }
+        }
+        
+        function checkQuiz(quizNum) {
+            const selectedOption = document.querySelector(`input[name="quiz${quizNum}"]:checked`);
+            const resultElement = document.getElementById(`quiz-result${quizNum}`);
+            
+            if (selectedOption) {
+                resultElement.style.display = 'block';
+            } else {
+                alert('الرجاء اختيار إجابة أولاً');
+            }
+        }
+        
+        // Initialize first slide
+        showSlide(1);
+    </script>
+</body>
+</html>

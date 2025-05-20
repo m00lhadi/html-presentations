@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عالم الروبوتات المدهش</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
+        
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 20px rgba(0, 150, 255, 0.7);
+            animation: glow 2s infinite alternate;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            color: #00b4ff;
+            margin-bottom: 1.5rem;
+        }
+        
+        p, li {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            max-width: 800px;
+        }
+        
+        ul {
+            text-align: right;
+            padding-right: 20px;
+        }
+        
+        li {
+            margin-bottom: 15px;
+            list-style-type: none;
+            position: relative;
+            padding-right: 30px;
+        }
+        
+        li:before {
+            content: "🤖";
+            position: absolute;
+            right: 0;
+        }
+        
+        .robot-icon {
+            font-size: 3rem;
+            margin: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #0066ff, #00ccff);
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 150, 255, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 150, 255, 0.6);
+        }
+        
+        .bg-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2;
+        }
+        
+        .fade-in {
+            animation: fadeIn 1.5s ease-in;
+        }
+        
+        .slide-in {
+            animation: slideIn 1s ease-out;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(0, 150, 255, 0.7);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(0, 150, 255, 0.9), 0 0 30px rgba(0, 100, 255, 0.5);
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .robot-types {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .robot-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            width: 250px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .robot-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 150, 255, 0.3);
+        }
+        
+        .robot-card h3 {
+            color: #00b4ff;
+            margin-top: 0;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            z-index: 100;
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #0066ff, #00ccff);
+            width: 0%;
+            transition: width 0.3s ease;
+            z-index: 100;
+        }
+        
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    
+    <div class="audio-control">
+        <button id="musicBtn" class="btn">تشغيل الموسيقى 🎵</button>
+    </div>
+    
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+    
+    <div class="slide" id="slide1">
+        <canvas id="bgCanvas" class="bg-animation"></canvas>
+        <h1 class="fade-in">عالم الروبوتات المدهش</h1>
+        <div class="robot-icon">🤖</div>
+        <p class="slide-in">رحلة تفاعلية لاكتشاف عالم الروبوتات وتطبيقاتها المذهلة</p>
+        <button class="btn start-btn">ابدأ الرحلة</button>
+    </div>
+    
+    <div class="slide" id="slide2">
+        <h2 class="fade-in">ما هو الروبوت؟</h2>
+        <p class="slide-in">الروبوت هو جهاز آلي ذكي يعمل أوتوماتيكياً نتيجة لبرمجته مسبقاً بأوامر تهدف إلى مساعدة الإنسان لأداء مهام مختلفة</p>
+        <div class="robot-types">
+            <div class="robot-card">
+                <h3>روبوت صناعي</h3>
+                <p>يستخدم في المصانع لأداء مهام متكررة بدقة عالية</p>
+                <div>🦾</div>
+            </div>
+            <div class="robot-card">
+                <h3>روبوت خدمي</h3>
+                <p>يساعد البشر في المهام اليومية والخدمات</p>
+                <div>👨‍💼</div>
+            </div>
+            <div class="robot-card">
+                <h3>روبوت طبي</h3>
+                <p>يساعد الأطباء في العمليات الجراحية الدقيقة</p>
+                <div>🏥</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slide" id="slide3">
+        <h2 class="fade-in">أبو العز الجزري</h2>
+        <p class="slide-in">أول من اخترع الروبوت هو العالم المسلم أبو العز الجزري</p>
+        <ul>
+            <li>ابتكر العديد من الأجهزة الميكانيكية والآلات ذاتية الحركة</li>
+            <li>من أشهر اختراعاته: آلة الوضوء الآلية</li>
+            <li>صمم أجهزة على هيئة إنسان آلي تقدم خدمات متكاملة</li>
+        </ul>
+        <div class="robot-icon">🧪</div>
+    </div>
+    
+    <div class="slide" id="slide4">
+        <h2 class="fade-in">أنواع الروبوتات</h2>
+        <div class="robot-types">
+            <div class="robot-card">
+                <h3>الروبوت الذراعي</h3>
+                <p>يشبه ذراع الإنسان، يستخدم في الصناعة</p>
+                <div>🦾</div>
+            </div>
+            <div class="robot-card">
+                <h3>الروبوت الطائر</h3>
+                <p>طائرة بدون طيار للاستكشاف والتصوير</p>
+                <div>🚁</div>
+            </div>
+            <div class="robot-card">
+                <h3>الروبوت البحري</h3>
+                <p>يستكشف أعماق المحيطات</p>
+                <div>🤿</div>
+            </div>
+            <div class="robot-card">
+                <h3>الروبوت البشري</h3>
+                <p>يشبه الإنسان في الحركة والتخاطب</p>
+                <div>👨‍🔧</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slide" id="slide5">
+        <h2 class="fade-in">مجالات استخدام الروبوت</h2>
+        <ul>
+            <li>الصناعة: تصنيع السيارات والأجهزة الإلكترونية</li>
+            <li>الطب: العمليات الجراحية الدقيقة والرعاية الصحية</li>
+            <li>الزراعة: زراعة البذور ورش المبيدات بدقة</li>
+            <li>الفضاء: استكشاف الكواكب والأجرام السماوية</li>
+            <li>الخدمات: التنظيف والطهي واستقبال الزوار</li>
+        </ul>
+        <div class="robot-icon">🌟</div>
+    </div>
+    
+    <div class="slide" id="slide6">
+        <h2 class="fade-in">تحديات استخدام الروبوتات</h2>
+        <ul>
+            <li>تكلفة التصنيع والصيانة العالية</li>
+            <li>احتمال استبدال الوظائف البشرية</li>
+            <li>مخاطر الأمن السيبراني للروبوتات المتصلة</li>
+            <li>الحاجة إلى قوانين تنظم استخدامها</li>
+        </ul>
+        <div class="robot-icon">⚠️</div>
+    </div>
+    
+    <div class="slide" id="slide7">
+        <h2 class="fade-in">روبوت المستقبل</h2>
+        <p>تخيل روبوتاً يحل مشكلة في مجتمعك:</p>
+        <div class="robot-card" style="width: 400px;">
+            <h3>روبوت تنظيف الشواطئ</h3>
+            <p>يعمل على جمع النفايات البلاستيكية من الشواطئ</p>
+            <p>يعمل بالطاقة الشمسية</p>
+            <p>يفصل النفايات القابلة لإعادة التدوير</p>
+            <div>🏖️</div>
+        </div>
+        <button class="btn" id="designBtn">صمم روبوتك الخاص!</button>
+    </div>
+    
+    <div class="navigation">
+        <button class="btn" id="prevBtn">السابق</button>
+        <button class="btn" id="nextBtn">التالي</button>
+    </div>
+
+    <script>
+        // Background animation
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const stars = [];
+        const starCount = 100;
+        
+        for (let i = 0; i < starCount; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 1.5,
+                vx: Math.floor(Math.random() * 50) - 25,
+                vy: Math.floor(Math.random() * 50) - 25
+            });
+        }
+        
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = 'white';
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fill();
+                
+                star.x += star.vx / 100;
+                star.y += star.vy / 100;
+                
+                if (star.x < 0 || star.x > canvas.width) star.vx = -star.vx;
+                if (star.y < 0 || star.y > canvas.height) star.vy = -star.vy;
+            });
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+        
+        // Slides functionality
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const startBtn = document.querySelector('.start-btn');
+        const progressBar = document.querySelector('.progress-bar');
+        const musicBtn = document.getElementById('musicBtn');
+        const bgMusic = document.getElementById('bgMusic');
+        const designBtn = document.getElementById('designBtn');
+        
+        let currentSlide = 0;
+        
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.display = i === index ? 'flex' : 'none';
+            });
+            
+            progressBar.style.width = `${(index + 1) / slides.length * 100}%`;
+            
+            // Reset animations for current slide
+            const elements = slides[index].querySelectorAll('*');
+            elements.forEach(el => {
+                el.style.animation = 'none';
+                setTimeout(() => {
+                    el.style.animation = '';
+                }, 10);
+            });
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        startBtn.addEventListener('click', nextSlide);
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+        
+        // Music control
+        let isMusicPlaying = false;
+        
+        musicBtn.addEventListener('click', () => {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicBtn.textContent = 'تشغيل الموسيقى 🎵';
+            } else {
+                bgMusic.play();
+                musicBtn.textContent = 'إيقاف الموسيقى 🔇';
+            }
+            isMusicPlaying = !isMusicPlaying;
+        });
+        
+        // Design button
+        designBtn.addEventListener('click', () => {
+            alert('مبروك! يمكنك الآن البدء في تصميم روبوتك الخاص. فكر في:\n1- الشكل والهيكل\n2- الوظيفة الأساسية\n3- الفئة المستفيدة\n4- البيئة التي سيعمل فيها');
+        });
+        
+        // Initialize
+        showSlide(0);
+        
+        // Responsive design
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>

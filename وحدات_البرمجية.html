@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وحدة Turtle في بايثون</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --bg-gradient: linear-gradient(135deg, #3498db 0%, #2ecc71 100%);
+        }
+        
+        body {
+            font-family: 'Tajawal', Arial, sans-serif;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: var(--bg-gradient);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .header .turtle-icon {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 2.5rem;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .slide {
+            display: none;
+            padding: 30px;
+            min-height: 400px;
+            position: relative;
+        }
+        
+        .active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0.5; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: var(--dark-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        button {
+            padding: 12px 25px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        
+        button:hover {
+            background: var(--dark-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .code {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            margin: 20px 0;
+            direction: ltr;
+            text-align: left;
+            overflow-x: auto;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .code::before {
+            content: 'Python';
+            position: absolute;
+            top: 5px;
+            left: 10px;
+            color: #777;
+            font-size: 0.8rem;
+        }
+        
+        .turtle-canvas-container {
+            background-color: #f0f8ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px dashed var(--primary-color);
+        }
+        
+        .turtle-canvas {
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .exercise {
+            background-color: #e8f8f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid var(--secondary-color);
+            position: relative;
+        }
+        
+        .exercise::before {
+            content: '\f044';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            opacity: 0.2;
+        }
+        
+        .quiz {
+            background-color: #fff8e1;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .icon-box {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .icon-item {
+            text-align: center;
+            width: 120px;
+            margin: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .icon-item:hover {
+            transform: scale(1.1);
+        }
+        
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            color: white;
+            font-size: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .progress-bar {
+            height: 5px;
+            background-color: #eee;
+            position: relative;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--bg-gradient);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .slide-indicator {
+            text-align: center;
+            padding: 10px;
+            color: #777;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted var(--dark-color);
+            cursor: help;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark-color);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 0;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header .turtle-icon {
+                position: static;
+                margin-bottom: 10px;
+            }
+            
+            .slide {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <i class="fas fa-turtle turtle-icon"></i>
+            <h1>الدرس الرابع: المحدات البرمجية - وحدة Turtle</h1>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progressBar"></div>
+        </div>
+        
+        <!-- Slide 1: Introduction -->
+        <div class="slide active" id="slide1">
+            <h2><i class="fas fa-info-circle"></i> مقدمة عن الوحدات البرمجية</h2>
+            <p>الوحدة (Module) عبارة عن ملف يحتوي على أوامر ودوال برمجية جاهزة. يتم استيرادها إلى البرنامج لتغيير وظائف مختلفة وتسهيل إدارة المشاريع.</p>
+            
+            <div class="icon-box">
+                <div class="icon-item">
+                    <div class="icon-circle">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <p>وحدات جاهزة</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <p>أكواد قابلة لإعادة الاستخدام</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <p>إدارة المشاريع</p>
+                </div>
+            </div>
+            
+            <p>يوفر بايثون العديد من الوحدات البرمجية مثل:</p>
+            <ul>
+                <li><i class="fas fa-window-maximize" style="color: var(--primary-color);"></i> وحدة واجهة المستخدم الرسومية (tkinter module)</li>
+                <li><i class="fas fa-random" style="color: var(--secondary-color);"></i> وحدة العشوائية (random module)</li>
+                <li><i class="fas fa-pen-fancy" style="color: var(--accent-color);"></i> وحدة الرسم (turtle module)</li>
+            </ul>
+            
+            <div class="nav-buttons">
+                <button onclick="nextSlide()">التالي <i class="fas fa-arrow-left"></i></button>
+            </div>
+            <div class="slide-indicator">الشريحة 1 من 10</div>
+        </div>
+        
+        <!-- Slide 2: Turtle Module Introduction -->
+        <div class="slide" id="slide2">
+            <h2><i class="fas fa-paint-brush"></i> وحدة Turtle</h2>
+            <p>تحتوي وحدة الرسم (Turtle Module) على أدوات تتيح لك رسم رسومات متجهة ثنائية الأبعاد بألوان مختلفة، وإنشاء أنظمة المحاكاة والألعاب التفاعلية.</p>
+            
+            <div class="turtle-canvas-container">
+                <canvas id="turtleDemo1" class="turtle-canvas" width="400" height="300"></canvas>
+                <p>مثال بسيط لرسم مربع باستخدام Turtle</p>
+            </div>
+            
+            <p>لاستكشاف نماذج من الأمثلة الرسومية:</p>
+            <ol>
+                <li>افتح Python Shell</li>
+                <li>انقر قائمة المساعدة Help</li>
+                <li>اختر أمر Turtle Demo</li>
+            </ol>
+            
+            <div class="nav-buttons">
+                <button onclick="prevSlide()"><i class="fas fa-arrow-right"></i> السابق</button>
+                <button onclick="nextSlide()">التالي <i class="fas fa-arrow-left"></i></button>
+            </div>
+            <div class="slide-indicator">الشريحة 2 من 10</div>
+        </div>
+        
+        <!-- Slide 3: Turtle Examples -->
+        <div class="slide" id="slide3">
+            <h2><i class="fas fa-images"></i> أمثلة Turtle Demo</h2>
+            <p>من النافذة التي تظهر يمكنك اختيار أمثلة مختلفة مثل:</p>
+            
+            <div class="icon-box">
+                <div class="icon-item">
+                    <div class="icon-circle" style="background: linear-gradient(135deg, #e74c3c 0%, #f39c12 100%);">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <p>Clock</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle" style="background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%);">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <p>Forest</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle" style="background: linear-gradient(135deg, #1abc9c 0%, #2ecc71 100%);">
+                        <i class="fas fa-dharmachakra"></i>
+                    </div>
+                    <p>Round Dance</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle" style="background: linear-gradient(135deg, #e67e22 0%, #d35400 100%);">
+                        <i class="fas fa-paint-roller"></i>
+                    </div>
+                    <p>Paint</p>
+                </div>
+            </div>
+            
+            <div class="exercise">
+                <h3><i class="fas fa-tasks"></i> نشاط: الأشكال المتحركة</h3>
+                <p>تأمل المقطع البرمجي لمثال 'dance' وأجب عن الأسئلة التالية:</p>
+                <ol>
+                    <li>ما الأمر البرمجي المستخدم في رسم شكل المثلث؟</li>
+                    <li>ما الأمر البرمجي المستخدم في رسم الأشكال المركبة؟</li>
+                    <li>ما الأمر البرمجي المستخدم في تحريك الأشكال؟</li>
+                </ol>
+            </div>
+            
+            <div class="nav-buttons">
+                <button onclick="prevSlide()"><i class="fas fa-arrow-right"></i> السابق</button>
+                <button onclick="nextSlide()">التالي <i class="fas fa-arrow-left"></i></button>
+            </div>
+            <div class="slide-indicator">الشريحة 3 من 10</div>
+        </div>
+        
+        <!-- Slide 4: Importing Turtle -->
+        <div class="slide" id="slide4">
+            <h2><i class="fas fa-file-import"></i> استدعاء وحدة الرسم</h2>
+            <p>لاستخدام وحدة Turtle، يجب استيرادها أولاً:</p>
+            <div class="code">
+from turtle import *
+Turtle() # أمر استدعاء لوحة الرسم
+            </div>
+            
+            <div class="turtle-canvas-container">
+                <canvas id="turtleDemo2" class="turtle-canvas" width="400" height="300"></canvas>
+                <p>نافذة Turtle الافتراضية بعد الاستيراد</p>
+            </div>
+            
+            <div class="tooltip">
+                <i class="fas fa-exclamation-triangle" style="color: var(--accent-color);"></i> ملاحظة هامة
+                <span class="tooltiptext">تجنب حفظ الملف باسم turtle.py حتى لا يتعارض مع اسم الوحدة</span>
+            </div>
+            
+            <div class="nav-buttons">
+                <button onclick="prevSlide()"><i class="fas fa-arrow-right"></i> السابق</button>
+                <button onclick="nextSlide()">التالي <i class="fas fa-arrow-left"></i></button>
+            </div>
+            <div class="slide-indicator">الشريحة 4 من 10</div>
+        </div>
+        
+        <!-- Slide 5: Drawing Basics -->
+        <div class="slide" id="slide5">
+            <h2><i class="fas fa-pencil-alt"></i> أساسيات الرسم</h2>
+            <p>يمكن تحريك المؤشر باستخدام أحد الطريقتين:</p>
+            
+            <div class="icon-box">
+                <div class="icon-item">
+                    <div class="icon-circle" style="background: linear-gradient(135deg, #3498db 0%, #9b59b6 100%);">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <p>تحديد الإحداثيات</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle" style="background: linear-gradient(135deg, #2ecc71 0%, #f1c40f 100%);">
+                        <i class="fas fa-directions"></i>
+                    </div>
+                    <p>تحديد الاتجاه</p>
+                </div>
+            </div>
+            
+            <h3>1. تحديد إحداثيات الموضع</h3>
+            <div class="code">
+from turtle import *
+Turtle()
+goto(0, 100) # الانتقال إلى الإحداثيات (0, 100)
+            </div>
+            
+            <h3>2. تحديد اتجاه المؤشر</h3>
+            <div class="code">
+from turtle import *
+Turtle()
+forward(100) # التحرك للأمام 100 بكسل
+right(90)    # الدوران 90 درجة مع عقارب الساعة
+            </div>
+            
+            <div class="nav-buttons">
+                <button onclick="prevSlide()"><i class="fas fa-arrow-right"></i> السابق</button>
+                <button onclick="nextSlide()">التالي <i class="fas fa-arrow-left"></i></button>
+            </div>
+            <div class="slide-indicator">الشريحة 5 من 10</div>
+        </div>
+        
+        <!-- Slide 6: Drawing Shapes -->
+        <div class="slide" id="slide6">
+            <h2><i class="fas fa-shapes"></i> رسم الأشكال الهندسية</h2>
+            <p>لرسم مربع:</p>
+            <div class="code">
+from turtle import *
+Turtle()
+forward(100)
+right(90)
+forward(100)
+right(90)
+forward(100)
+right(90)
+forward(100)
+            </div>
+            
+            <div class="turtle-canvas-container">
+                <canvas id="squareDemo" class="turtle-canvas" width="400" height="300"></canvas>
+                <p>نتيجة تنفيذ الكود السابق</p>
+            </div>
+            
+            <div class="exercise">
+                <h3><i class="fas fa-laptop-code"></i> نشاط: رسم المضلعات</h3>
+                <p>استخدم حلقة التكرار for لرسم أشكال منتظمة أخرى (مثلث، خماسي، سداسي).</p>
+                <p>مثال لرسم شكل حلزوني:</p>
+                <div class="code">
+from turtle import *
+Turtle()
+color('red')
+for i in range(200):
+    forward(i)
+    left(91)
+                </div>
+            </div>
+            
+            <div class="nav-buttons">
+                <button onclick="prevSlide()"><i class="fas fa-arrow-right"></i> السابق</button>
+                <button onclick="nextSlide()">التالي <i class="fas fa-arrow-left"></i></button>
+            </div>
+            <div class="slide-indicator">الشريحة 6 من 10</div>
+        </div>
+        
+        <!-- Slide 7: Advanced Drawing -->
+        <div class="slide" id="slide7">
+            <h2><i class="fas fa-magic"></i> الرسم المتقدم</h2>
+            <p>لرسم أشكال متعددة الألوان باستخدام وحدة random:</p>
+            <div class="code">
+from turtle import *
+import random
+Turtle()
+colors = ['red', 'yellow', 'purple']
+for i in range(200):
+    color(random.choice(colors))
+    forward(i)
+    left(91)
+    speed(5) # تغيير سرعة الرسم
+            </div>
+            
+            <div class="turtle-canvas-container">
+                <canvas id="spiralDemo" class="turtle-canvas" width="400" height="300"></canvas>
+                <p>شكل حلزوني متعدد الألوان</p>
+            </div>
+            
+            <div class="icon-box">
+                <div class="icon-item">
+                    <div class="icon-circle" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                        <i class="fas fa-random"></i>
+                    </div>
+                    <p>وحدة العشوائية</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <p>تغيير السرعة</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <p>تعدد الألوان</p>
+                </div>
+            </div>
+            
+            <div class="nav-buttons">
+                <button onclick="prevSlide()"><i class="fas fa-arrow-right"></i> السابق</button>
+                <button onclick="nextSlide()">التالي <i class="fas fa-arrow-left"></i></button>
+            </div>
+            <div class="slide-indicator">الشريحة 7 من 10</div>
+        </div>
+        
+        <!-- Slide 8: Customization -->
+        <div class="slide" id="slide8">
+            <h2><i class="fas fa-sliders-h"></i> تخصيص خصائص الرسم</h2>
+            
+            <div class="turtle-canvas-container">
+                <canvas id="customDemo" class="turtle-canvas" width="400" height="300"></canvas>
+                <p>مثال لتخصيص خصائص الرسم</p>
+            </div>
+            
+            <div class="icon-box">
+                <div class="icon-item">
+                    <div class="icon-circle" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+                        <i class="fas fa-fill-drip"></i>
+                    </div>
+                    <p>لون الخلفية</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                        <i class="fas fa-font"></i>
+                    </div>
+                    <p>إضافة النصوص</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <p>تغيير شكل المؤشر</p>
+                </div>
+            </div>
+            
+            <h3>تغيير خلفية الرسم</h3>
+            <div class="code">
+from turtle import *
+Turtle()
+bgcolor("blue") # تغيير لون الخلفية
+            </div>
+            
+            <h3>إضافة نص</h3>
+            <div class="code">
+write("Oman", align="left", font=("Arial", 12))
+            </div>
+            
+            <h3>تغيير شكل المؤشر</h3>
+            <div class="code">
+shape("turtle") # تغيير شكل المؤشر إلى سلحفاة
+            </div>
+            
+            <div class="nav-buttons">
+                <button onclick="prevSlide()"><i class="fas fa-arrow-right"></i> السابق</button>
+                <button onclick="nextSlide()">التالي <i class="fas fa-arrow-left"></i></button>
+            </div>
+            <div class="slide-indicator">الشريحة 8 من 10</div>
+        </div>
+        
+        <!-- Slide 9: Final Activity -->
+        <div class="slide" id="slide9">
+            <h2><i class="fas fa-flag-checkered"></i> نشاط نهائي</h2>
+            
+            <div class="exercise">
+                <h3><i class="fas fa-project-diagram"></i> برنامج الأشكال الهندسية</h3>
+                <p>أنشئ برنامجاً يرسم أشكالاً هندسية مختلفة بناءً على اختيار المستخدم:</p>
+                <ol>
+                    <li>عرف متغيراً باستخدام input() ليختار المستخدم رقمًا من 1 إلى 3</li>
+                    <li>استخدم الجمل الشرطية للتحقق من الاختيار:
+                        <ul>
+                            <li>إذا كان 1: افتح لوحة رسم زرقاء وارسم خطاً مستقيماً</li>
+                            <li>إذا كان 2: افتح لوحة رسم حمراء وارسم زاوية قائمة</li>
+                            <li>إذا كان 3: افتح لوحة رسم صفراء وارسم مثلثاً</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <div class="code">
+# مثال للبداية
+from turtle import *
+
+choice = int(input("اختر رقمًا من 1 إلى 3: "))
+t = Turtle()
+
+if choice == 1:
+    t.screen.bgcolor("blue")
+    t.forward(100)
+elif choice == 2:
+    t.screen.bgcolor("red")
+    t.forward(100)
+    t.right(90)
+    t.forward(100)
+elif choice == 3:
+    t.screen.bgcolor("yellow")
+    for _ in range(3):
+        t.forward(100)
+        t.right(120)
+else:
+    print("اختيار غير صحيح")
+                </div>
+            </div>
+            
+            <div class="quiz">
+                <h3><i class="fas fa-question-circle"></i> اختبار معلوماتك</h3>
+                <div class="tooltip">
+                    <p>1. كيف تسهم البرمجة في تسهيل بعض مهام الحياة اليومية؟</p>
+                    <span class="tooltiptext">البرمجة تساعد في أتمتة المهام المتكررة وحل المشكلات المعقدة</span>
+                </div>
+                <div class="tooltip">
+                    <p>2. ما النتيجة المتوقعة من تنفيذ: print("Oman" + 5)؟</p>
+                    <span class="tooltiptext">خطأ! لا يمكن جمع نص مع رقم</span>
+                </div>
+                <div class="tooltip">
+                    <p>3. ما فائدة إضافة علامة (#) في المقطع البرمجي؟</p>
+                    <span class="tooltiptext">لإضافة تعليقات توضح عمل الكود</span>
+                </div>
+            </div>
+            
+            <div class="nav-buttons">
+                <button onclick="prevSlide()"><i class="fas fa-arrow-right"></i> السابق</button>
+                <button onclick="nextSlide()">التالي <i class="fas fa-arrow-left"></i></button>
+            </div>
+            <div class="slide-indicator">الشريحة 9 من 10</div>
+        </div>
+        
+        <!-- Slide 10: Resources -->
+        <div class="slide" id="slide10">
+            <h2><i class="fas fa-book"></i> المراجع والمصادر</h2>
+            
+            <div class="icon-box">
+                <div class="icon-item">
+                    <div class="icon-circle" style="background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <p>المراجع العربية</p>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <p>المراجع الإنجليزية</p>
+                </div>
+            </div>
+            
+            <ul>
+                <li><i class="fas fa-book" style="color: #3498db;"></i> مصباح، خالد محمد. (2021) المهام الأساسية - المركز المصري لتبسيط العلوم</li>
+                <li><i class="fas fa-file-pdf" style="color: #e74c3c;"></i> Cannon, Jason. Python Programming for Beginners</li>
+                <li><i class="fas fa-link" style="color: #2ecc71;"></i> Halterman, Richard L. (2011) LEARNING TO PROGRAM WITH PYTHON</li>
+                <li><i class="fas fa-university" style="color: #9b59b6;"></i> Kuhlman, Dave. (2013) A Python Book</li>
+                <li><i class="fas fa-graduation-cap" style="color: #f1c40f;"></i> Learn Python simply easy learning</li>
+            </ul>
+            
+            <div class="turtle-canvas-container" style="margin-top: 30px;">
+                <canvas id="finalDemo" class="turtle-canvas" width="400" height="200"></canvas>
+                <p>شكراً لحضوركم! <i class="fas fa-smile" style="color: #f1c40f;"></i></p>
+            </div>
+            
+            <div class="nav-buttons">
+                <button onclick="prevSlide()"><i class="fas fa-arrow-right"></i> السابق</button>
+                <button onclick="alert('وصلت إلى نهاية العرض التقديمي! شكراً لك')">الإنهاء <i class="fas fa-check"></i></button>
+            </div>
+            <div class="slide-indicator">الشريحة 10 من 10</div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 10;
+        
+        function showSlide(n) {
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            document.getElementById('slide' + n).classList.add('active');
+            currentSlide = n;
+            
+            // Update progress bar
+            const progress = (n / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            
+            // Update slide indicator
+            document.querySelectorAll('.slide-indicator').forEach(ind => {
+                ind.textContent = `الشريحة ${n} من ${totalSlides}`;
+            });
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                showSlide(currentSlide + 1);
+            } else {
+                alert("وصلت إلى نهاية العرض التقديمي!");
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 1) {
+                showSlide(currentSlide - 1);
+            }
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                prevSlide();
+            }
+        });
+        
+        // Simple canvas drawings for demonstration
+        function drawTurtleDemo1() {
+            const canvas = document.getElementById('turtleDemo1');
+            const ctx = canvas.getContext('2d');
+            
+            ctx.strokeStyle = '#3498db';
+            ctx.lineWidth = 2;
+            
+            ctx.beginPath();
+            ctx.moveTo(150, 150);
+            ctx.lineTo(250, 150);
+            ctx.lineTo(250, 250);
+            ctx.lineTo(150, 250);
+            ctx.closePath();
+            ctx.stroke();
+        }
+        
+        function drawTurtleDemo2() {
+            const canvas = document.getElementById('turtleDemo2');
+            const ctx = canvas.getContext('2d');
+            
+            // Draw canvas border
+            ctx.strokeStyle = '#ddd';
+            ctx.strokeRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw turtle
+            ctx.fillStyle = '#2ecc71';
+            ctx.beginPath();
+            ctx.arc(200, 150, 15, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Draw turtle head
+            ctx.beginPath();
+            ctx.arc(200, 130, 5, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        
+        function drawSquareDemo() {
+            const canvas = document.getElementById('squareDemo');
+            const ctx = canvas.getContext('2d');
+            
+            ctx.strokeStyle = '#e74c3c';
+            ctx.lineWidth = 3;
+            
+            ctx.beginPath();
+            ctx.moveTo(150, 150);
+            ctx.lineTo(250, 150);
+            ctx.lineTo(250, 250);
+            ctx.lineTo(150, 250);
+            ctx.closePath();
+            ctx.stroke();
+        }
+        
+        function drawSpiralDemo() {
+            const canvas = document.getElementById('spiralDemo');
+            const ctx = canvas.getContext('2d');
+            
+            const colors = ['#e74c3c', '#f1c40f', '#9b59b6'];
+            ctx.translate(canvas.width/2, canvas.height/2);
+            
+            for (let i = 0; i < 100; i++) {
+                ctx.strokeStyle = colors[i % colors.length];
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(i, 0);
+                ctx.stroke();
+                ctx.translate(i, 0);
+                ctx.rotate(Math.PI / 2);
+            }
+        }
+        
+        function drawCustomDemo() {
+            const canvas = document.getElementById('customDemo');
+            const ctx = canvas.getContext('2d');
+            
+            // Background
+            ctx.fillStyle = '#3498db';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Text
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 20px Arial';
+            ctx.fillText('Oman', 50, 50);
+            
+            // Turtle shape
+            ctx.fillStyle = '#2ecc71';
+            ctx.beginPath();
+            ctx.arc(200, 150, 20, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Turtle head
+            ctx.beginPath();
+            ctx.arc(200, 125, 8, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        
+        function drawFinalDemo() {
+            const canvas = document.getElementById('finalDemo');
+            const ctx = canvas.getContext('2d');
+            
+            // Smiley face
+            ctx.fillStyle = '#f1c40f';
+            ctx.beginPath();
+            ctx.arc(100, 100, 50, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Eyes
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(80, 80, 10, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(120, 80, 10, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Mouth
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.arc(100, 100, 30, 0, Math.PI);
+            ctx.stroke();
+            
+            // Thank you text
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = 'bold 16px Arial';
+            ctx.fillText('شكراً لتعلمك معنا!', 180, 50);
+            
+            ctx.fillStyle = '#3498db';
+            ctx.font = 'italic 14px Arial';
+            ctx.fillText('وحدة Turtle في بايثون', 180, 80);
+        }
+        
+        // Initialize drawings when page loads
+        window.onload = function() {
+            drawTurtleDemo1();
+            drawTurtleDemo2();
+            drawSquareDemo();
+            drawSpiralDemo();
+            drawCustomDemo();
+            drawFinalDemo();
+        };
+    </script>
+</body>
+</html>

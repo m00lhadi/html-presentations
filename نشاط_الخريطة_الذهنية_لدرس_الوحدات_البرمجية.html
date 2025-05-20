@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الوحدات البرمجية في بايثون - خريطة ذهنية تفاعلية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+        
+        body {
+            font-family: 'Tajawal', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .mindmap-container {
+            perspective: 1000px;
+        }
+        .mindmap {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            animation: fadeIn 1s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .central-topic {
+            background: linear-gradient(135deg, #2c3e50 0%, #4ca1af 100%);
+            color: white;
+            padding: 18px 30px;
+            border-radius: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .central-topic::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255,255,255,0.3) 0%,
+                rgba(255,255,255,0) 60%
+            );
+            transform: rotate(30deg);
+            transition: all 0.7s ease;
+        }
+        .central-topic:hover {
+            transform: translateY(-5px) rotateX(5deg);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        .central-topic:hover::after {
+            left: 100%;
+        }
+        .branches {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .branch {
+            background: linear-gradient(135deg, #3498db 0%, #6dd5fa 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 12px;
+            width: 220px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .branch:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+        }
+        .branch::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(255,255,255,0.1) 0%,
+                rgba(255,255,255,0) 100%
+            );
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        .branch:hover::before {
+            transform: translateX(100%);
+        }
+        .branch-title {
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 12px;
+            border-bottom: 2px dashed rgba(255,255,255,0.5);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sub-branches {
+            margin-top: 12px;
+            transition: all 0.5s ease;
+        }
+        .sub-branch {
+            background: linear-gradient(135deg, #2980b9 0%, #4b6cb7 100%);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sub-branch:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .sub-sub-branches {
+            margin-top: 8px;
+            margin-right: 15px;
+            animation: slideIn 0.5s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .sub-sub-branch {
+            background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .sub-sub-branch:hover {
+            transform: translateX(3px);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #7f8c8d;
+            font-size: 16px;
+            background: rgba(255,255,255,0.7);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        .emoji {
+            font-size: 1.2em;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .floating-icons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .floating-icon {
+            position: absolute;
+            opacity: 0.1;
+            animation: float linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="mindmap-container">
+        <div class="mindmap">
+            <div>
+                <div class="central-topic">
+                    <i class="fas fa-code emoji"></i> الوحدات البرمجية في بايثون <i class="fas fa-laptop-code emoji"></i>
+                </div>
+                
+                <div class="branches">
+                    <!-- Branch 1 -->
+                    <div class="branch">
+                        <div class="branch-title"><i class="fas fa-lightbulb"></i> مفهوم الوحدات البرمجية</div>
+                        <div class="sub-branches">
+                            <div class="sub-branch"><i class="fas fa-file-code"></i> ملف يحتوي على أوامر ودوال جاهزة</div>
+                            <div class="sub-branch"><i class="fas fa-cogs"></i> تسهيل تنفيذ الوظائف</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Branch 2 -->
+                    <div class="branch">
+                        <div class="branch-title"><i class="fas fa-cubes"></i> الوحدات الأساسية</div>
+                        <div class="sub-branches">
+                            <div class="sub-branch"><i class="fas fa-window-maximize"></i> tkinter لواجهة المستخدم</div>
+                            <div class="sub-branch"><i class="fas fa-paint-brush"></i> turtle للرسم</div>
+                            <div class="sub-branch"><i class="fas fa-random"></i> random للعمليات العشوائية</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Branch 3 -->
+                    <div class="branch">
+                        <div class="branch-title"><i class="fas fa-paint-brush"></i> وحدة السلحفاة (Turtle)</div>
+                        <div class="sub-branches">
+                            <div class="sub-branch"><i class="fas fa-draw-polygon"></i> رسم أشكال ثنائية الأبعاد</div>
+                            <div class="sub-branch">
+                                <i class="fas fa-arrows-alt"></i> تحريك المؤشر
+                                <div class="sub-sub-branches">
+                                    <div class="sub-sub-branch"><i class="fas fa-location-arrow"></i> goto(x, y)</div>
+                                    <div class="sub-sub-branch"><i class="fas fa-arrow-up"></i> forward(distance)</div>
+                                    <div class="sub-sub-branch"><i class="fas fa-arrow-down"></i> backward(distance)</div>
+                                </div>
+                            </div>
+                            <div class="sub-branch">
+                                <i class="fas fa-shapes"></i> رسم أشكال هندسية
+                                <div class="sub-sub-branches">
+                                    <div class="sub-sub-branch"><i class="fas fa-redo"></i> استخدام حلقات for</div>
+                                    <div class="sub-sub-branch"><i class="fas fa-triangle"></i> مثلث، خماسي</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Branch 4 -->
+                    <div class="branch">
+                        <div class="branch-title"><i class="fas fa-sliders-h"></i> خصائص الرسم</div>
+                        <div class="sub-branches">
+                            <div class="sub-branch"><i class="fas fa-fill-drip"></i> bgcolor(color) للخلفية</div>
+                            <div class="sub-branch"><i class="fas fa-tachometer-alt"></i> speed(speed) للسرعة</div>
+                            <div class="sub-branch"><i class="fas fa-mouse-pointer"></i> shape() لتغيير شكل المؤشر</div>
+                            <div class="sub-branch"><i class="fas fa-pen"></i> تغيير لون الخط وسمكه</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Branch 5 -->
+                    <div class="branch">
+                        <div class="branch-title"><i class="fas fa-tasks"></i> وظائف أخرى</div>
+                        <div class="sub-branches">
+                            <div class="sub-branch"><i class="fas fa-font"></i> write() لكتابة النصوص</div>
+                            <div class="sub-branch"><i class="fas fa-film"></i> إنشاء رسوم متحركة</div>
+                            <div class="sub-branch"><i class="fas fa-flask"></i> تجارب عملية متنوعة</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <i class="fas fa-star"></i> تم إعداد هذه الخريطة الذهنية بناءً على ملخص "أهم أهداف درس الوحدات البرمجية" <i class="fas fa-star"></i><br>
+        <i class="fas fa-user-edit"></i> إعداد: maryam alhadi <i class="fas fa-heart" style="color: #e74c3c;"></i>
+    </div>
+
+    <div class="floating-icons" id="floatingIcons"></div>
+
+    <script>
+        // إنشاء أيقونات عائمة عشوائية
+        const icons = ['fa-code', 'fa-laptop-code', 'fa-file-code', 'fa-cogs', 'fa-paint-brush', 
+                      'fa-random', 'fa-draw-polygon', 'fa-shapes', 'fa-font', 'fa-flask'];
+        const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c'];
+        
+        const floatingIcons = document.getElementById('floatingIcons');
+        
+        for (let i = 0; i < 20; i++) {
+            const icon = document.createElement('i');
+            icon.className = `fas ${icons[Math.floor(Math.random() * icons.length)]} floating-icon`;
+            icon.style.left = `${Math.random() * 100}%`;
+            icon.style.top = `${Math.random() * 100}%`;
+            icon.style.fontSize = `${Math.random() * 20 + 10}px`;
+            icon.style.color = colors[Math.floor(Math.random() * colors.length)];
+            icon.style.animationDuration = `${Math.random() * 30 + 20}s`;
+            icon.style.animationDelay = `${Math.random() * 5}s`;
+            floatingIcons.appendChild(icon);
+        }
+        
+        // تأثيرات تفاعلية للفروع
+        document.querySelectorAll('.branch').forEach(branch => {
+            branch.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.03)';
+                this.style.boxShadow = '0 15px 25px rgba(0,0,0,0.2)';
+            });
+            
+            branch.addEventListener('mouseleave', function() {
+                this.style.transform = '';
+                this.style.boxShadow = '0 8px 15px rgba(0,0,0,0.1)';
+            });
+        });
+    </script>
+</body>
+</html>

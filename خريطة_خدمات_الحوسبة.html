@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خريطة ذهنية للحوسبة السحابية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .mindmap-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 10px;
+        }
+        
+        .central-topic {
+            background: #3498db;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+            font-size: 1.8em;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .central-topic:hover {
+            transform: translateY(-5px) rotateX(5deg);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+        
+        .central-topic::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(to right, #2980b9, #2c3e50);
+        }
+        
+        .branches-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+        
+        .branch {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .branch:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .branch-title {
+            font-weight: bold;
+            font-size: 1.3em;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+            display: flex;
+            align-items: center;
+        }
+        
+        .branch-title i {
+            margin-left: 10px;
+            font-size: 1.5em;
+        }
+        
+        .sub-topic {
+            background: #f8f9fa;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            border-right: 4px solid #3498db;
+            transition: all 0.2s ease;
+        }
+        
+        .sub-topic:hover {
+            background: #e9f5ff;
+            transform: translateX(5px);
+        }
+        
+        .examples {
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px dashed #ddd;
+        }
+        
+        .example-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            padding: 5px;
+            border-radius: 5px;
+            transition: all 0.2s ease;
+        }
+        
+        .example-item:hover {
+            background: #e3f2fd;
+        }
+        
+        .example-item a {
+            color: #2980b9;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        
+        .example-item a:hover {
+            text-decoration: underline;
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+            margin-left: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .branches-container {
+                flex-direction: column;
+            }
+            
+            .branch {
+                min-width: 100%;
+            }
+        }
+        
+        /* Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="mindmap-container">
+        <h1 class="floating">🌩️ خريطة ذهنية للحوسبة السحابية ☁️</h1>
+        
+        <div class="central-topic">
+            <i class="fas fa-cloud"></i> خدمات الحوسبة السحابية
+            <div style="font-size: 0.7em; margin-top: 10px;">تقديم خدمات عبر الإنترنت عند الطلب</div>
+        </div>
+        
+        <div class="branches-container">
+            <!-- الفروع الرئيسية -->
+            <div class="branch">
+                <div class="branch-title">
+                    <i class="fas fa-users"></i> الفئات المستفيدة
+                </div>
+                
+                <div class="sub-topic">
+                    <span class="emoji">🏢</span> المؤسسات
+                    <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                        - مراقبة العمليات وتحسين الإنتاجية<br>
+                        - منصات تطوير البرمجيات
+                    </div>
+                </div>
+                
+                <div class="sub-topic">
+                    <span class="emoji">🏛️</span> المرجعية
+                    <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                        - بيانات افتراضية للتجارة الإلكترونية<br>
+                        - تأكيد خلو البرمجيات من الأخطاء
+                    </div>
+                </div>
+                
+                <div class="sub-topic">
+                    <span class="emoji">👨‍💻</span> الأفراد
+                    <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                        - العمل عن بعد والاجتماعات<br>
+                        - خدمات التخزين السحابي
+                    </div>
+                </div>
+            </div>
+            
+            <div class="branch">
+                <div class="branch-title">
+                    <i class="fas fa-list-alt"></i> أنواع الخدمات
+                </div>
+                
+                <div class="sub-topic">
+                    <span class="emoji">📧</span> بريد إلكتروني
+                    <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                        مثال: Outlook
+                    </div>
+                </div>
+                
+                <div class="sub-topic">
+                    <span class="emoji">💾</span> تخزين سحابي
+                    <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                        مثال: OneDrive
+                    </div>
+                </div>
+                
+                <div class="sub-topic">
+                    <span class="emoji">🎵</span> صوتيات سحابية
+                    <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                        مثال: Amazon Cloud Player
+                    </div>
+                </div>
+                
+                <div class="sub-topic">
+                    <span class="emoji">📅</span> تطبيقات وبرامج سحابية
+                    <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                        مثال: Google Calendar
+                    </div>
+                </div>
+                
+                <div class="sub-topic">
+                    <span class="emoji">💻</span> أنظمة تشغيل سحابية
+                    <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                        مثال: Chromium OS
+                    </div>
+                </div>
+            </div>
+            
+            <div class="branch">
+                <div class="branch-title">
+                    <i class="fas fa-laptop-code"></i> مميزات الحوسبة السحابية
+                </div>
+                
+                <div class="sub-topic">
+                    <span class="emoji">⚡</span> سرعة عالية
+                    <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                        خوادم بسرعة عالية وأداء ممتاز
+                    </div>
+                </div>
+                
+                <div class="sub-topic">
+                    <span class="emoji">🗄️</span> مساحة تخزين كبيرة
+                    <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                        توفير مساحات تخزين ضخمة
+                    </div>
+                </div>
+                
+                <div class="sub-topic">
+                    <span class="emoji">🛡️</span> حماية البيانات
+                    <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                        تأمين وحماية المعلومات
+                    </div>
+                </div>
+                
+                <div class="sub-topic">
+                    <span class="emoji">🔧</span> دعم فني
+                    <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                        دعم فني متوفر على مدار الساعة
+                    </div>
+                </div>
+                
+                <div class="sub-topic">
+                    <span class="emoji">💲</span> توفير التكاليف
+                    <div style="font-size: 0.9em; color: #666; margin-top: 5px;">
+                        لا حاجة لشراء أجهزة باهظة الثمن
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="branch" style="margin-top: 30px; max-width: 100%;">
+            <div class="branch-title">
+                <i class="fas fa-globe"></i> أمثلة على خدمات سحابية
+            </div>
+            
+            <div class="examples">
+                <div class="example-item">
+                    <span class="emoji">📧</span>
+                    <a href="https://outlook.live.com/owa/" target="_blank">Outlook</a> - خدمة بريد إلكتروني سحابي
+                </div>
+                
+                <div class="example-item">
+                    <span class="emoji">🎵</span>
+                    <a href="https://music.amazon.com/home" target="_blank">Amazon Cloud Player</a> - خدمة صوتيات سحابية
+                </div>
+                
+                <div class="example-item">
+                    <span class="emoji">📅</span>
+                    <a href="https://calendar.google.com/calendar/r?pli=1" target="_blank">Google Calendar</a> - تطبيق تقويم سحابي
+                </div>
+                
+                <div class="example-item">
+                    <span class="emoji">💾</span>
+                    <a href="https://onedrive.live.com/about/signin/" target="_blank">OneDrive</a> - خدمة تخزين سحابي
+                </div>
+                
+                <div class="example-item">
+                    <span class="emoji">💻</span>
+                    <a href="https://www.chromium.org/chromium-os" target="_blank">Chromium OS</a> - نظام تشغيل سحابي
+                </div>
+                
+                <div class="example-item">
+                    <span class="emoji">🎥</span>
+                    <a href="https://www.renderforest.com/ar/video-maker" target="_blank">Renderores</a> - منصة لصناعة الفيديو
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // إضافة تأثيرات عند التمرير
+        document.addEventListener('DOMContentLoaded', function() {
+            const branches = document.querySelectorAll('.branch');
+            
+            function checkVisibility() {
+                branches.forEach((branch, index) => {
+                    const rect = branch.getBoundingClientRect();
+                    const isVisible = (rect.top <= window.innerHeight * 0.8);
+                    
+                    if (isVisible) {
+                        setTimeout(() => {
+                            branch.style.opacity = '1';
+                            branch.style.transform = 'translateY(0)';
+                        }, index * 200);
+                    }
+                });
+            }
+            
+            // تهيئة أولية
+            branches.forEach(branch => {
+                branch.style.opacity = '0';
+                branch.style.transform = 'translateY(20px)';
+                branch.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+            
+            // التحقق عند التحميل وعند التمرير
+            checkVisibility();
+            window.addEventListener('scroll', checkVisibility);
+        });
+    </script>
+</body>
+</html>

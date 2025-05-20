@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خريطة ذهنية للحوسبة السحابية</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .mindmap {
+            display: flex;
+            justify-content: center;
+        }
+        .node {
+            margin: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+            min-width: 150px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+        }
+        .node:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .node.main {
+            background-color: #2c3e50;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .node.level1 {
+            background-color: #2980b9;
+        }
+        .node.level2 {
+            background-color: #16a085;
+        }
+        .node.level3 {
+            background-color: #27ae60;
+        }
+        .children {
+            display: none;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .visible {
+            display: flex;
+        }
+        .branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .connector {
+            width: 2px;
+            height: 20px;
+            background-color: #95a5a6;
+            margin: 0 auto;
+        }
+        .info-panel {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            display: none;
+        }
+        .info-panel h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .info-panel p {
+            margin-bottom: 5px;
+        }
+        .back-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 8px 15px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>خريطة ذهنية تفاعلية للحوسبة السحابية</h1>
+        
+        <div class="mindmap">
+            <div class="branch">
+                <div class="node main" onclick="toggleChildren(this)">الحوسبة السحابية</div>
+                <div class="connector"></div>
+                <div class="children">
+                    <div class="branch">
+                        <div class="node level1" onclick="toggleChildren(this)">مقدمة</div>
+                        <div class="connector"></div>
+                        <div class="children">
+                            <div class="node level2" onclick="showInfo('intro-definition')">تعريف</div>
+                            <div class="node level2" onclick="showInfo('intro-history')">نشأة</div>
+                            <div class="node level2" onclick="showInfo('intro-requirements')">متطلبات</div>
+                            <div class="node level2" onclick="showInfo('intro-risks')">مخاطر</div>
+                        </div>
+                    </div>
+                    
+                    <div class="branch">
+                        <div class="node level1" onclick="toggleChildren(this)">مزايا</div>
+                        <div class="connector"></div>
+                        <div class="children">
+                            <div class="node level2" onclick="showInfo('benefits-speed')">سرعة المعالجة</div>
+                            <div class="node level2" onclick="showInfo('benefits-cost')">خفض التكلفة</div>
+                            <div class="node level2" onclick="showInfo('benefits-security')">الأمان</div>
+                            <div class="node level2" onclick="showInfo('benefits-sharing')">تبادل المعلومات</div>
+                            <div class="node level2" onclick="showInfo('benefits-updates')">التحديث المستمر</div>
+                            <div class="node level2" onclick="showInfo('benefits-access')">سهولة الوصول</div>
+                        </div>
+                    </div>
+                    
+                    <div class="branch">
+                        <div class="node level1" onclick="toggleChildren(this)">مكونات</div>
+                        <div class="connector"></div>
+                        <div class="children">
+                            <div class="node level2" onclick="showInfo('components-infra')">البنية التحتية</div>
+                            <div class="node level2" onclick="showInfo('components-user')">المستخدم</div>
+                            <div class="node level2" onclick="showInfo('components-provider')">مزود الخدمة</div>
+                            <div class="node level2" onclick="showInfo('components-apps')">التطبيقات</div>
+                        </div>
+                    </div>
+                    
+                    <div class="branch">
+                        <div class="node level1" onclick="toggleChildren(this)">نماذج النشر</div>
+                        <div class="connector"></div>
+                        <div class="children">
+                            <div class="node level2" onclick="showInfo('deployment-public')">السحابة العامة</div>
+                            <div class="node level2" onclick="showInfo('deployment-private')">السحابة الخاصة</div>
+                            <div class="node level2" onclick="showInfo('deployment-hybrid')">السحابة الهجينة</div>
+                        </div>
+                    </div>
+                    
+                    <div class="branch">
+                        <div class="node level1" onclick="toggleChildren(this)">نماذج الخدمة</div>
+                        <div class="connector"></div>
+                        <div class="children">
+                            <div class="node level2" onclick="showInfo('service-iaas')">IaaS</div>
+                            <div class="node level2" onclick="showInfo('service-paas')">PaaS</div>
+                            <div class="node level2" onclick="showInfo('service-saas')">SaaS</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="info-panel" class="info-panel">
+            <h3 id="info-title">عنوان المعلومات</h3>
+            <div id="info-content">
+                <p>محتوى المعلومات سيظهر هنا.</p>
+            </div>
+            <button class="back-btn" onclick="hideInfo()">العودة إلى الخريطة</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleChildren(element) {
+            const children = element.parentElement.querySelector('.children');
+            children.classList.toggle('visible');
+        }
+        
+        function showInfo(infoId) {
+            const infoPanel = document.getElementById('info-panel');
+            const infoTitle = document.getElementById('info-title');
+            const infoContent = document.getElementById('info-content');
+            
+            // إخفاء جميع العقد النشطة
+            document.querySelectorAll('.node').forEach(node => {
+                node.classList.remove('active');
+            });
+            
+            // إضافة فئة نشطة للعقدة المحددة
+            event.target.classList.add('active');
+            
+            // تعبئة لوحة المعلومات بناءً على المعرف
+            switch(infoId) {
+                case 'intro-definition':
+                    infoTitle.textContent = 'تعريف الحوسبة السحابية';
+                    infoContent.innerHTML = `
+                        <p>الحوسبة السحابية عبارة عن تقنية تهدف إلى توفير مجموعة من الخدمات عبر شبكة الإنترنت، وتشمل هذه الخدمات تقديم الموارد الحاسوبية (البرمجيات والمعدات)، وتوفير مساحات لتخزين الملفات، وعمل النسخ الاحتياطية.</p>
+                        <p>تهدف إلى تقليل تكلفة شراء الموارد الحاسوبية وتوفير مستوى من الأمان والخصوصية.</p>
+                    `;
+                    break;
+                    
+                case 'intro-history':
+                    infoTitle.textContent = 'نشأة الحوسبة السحابية';
+                    infoContent.innerHTML = `
+                        <p>ظهرت فكرة الحوسبة السحابية مع تطور تقنيات الإنترنت والخدمات عن بعد، حيث أصبح بالإمكان تقديم الخدمات الحاسوبية عبر الشبكة بدلاً من تثبيتها محلياً على كل جهاز.</p>
+                        <p>تطورت الفكرة مع ظهور شركات كبرى مثل أمازون ومايكروسوفت وجوجل التي بدأت بتقديم خدمات سحابية متكاملة.</p>
+                    `;
+                    break;
+                    
+                case 'intro-requirements':
+                    infoTitle.textContent = 'متطلبات الوصول للحوسبة السحابية';
+                    infoContent.innerHTML = `
+                        <ul>
+                            <li>اتصال بالإنترنت</li>
+                            <li>جهاز حاسوب أو جهاز ذكي</li>
+                            <li>حساب لدى مزود الخدمة السحابية</li>
+                            <li>متصفح ويب أو تطبيقات مخصصة</li>
+                        </ul>
+                    `;
+                    break;
+                    
+                case 'intro-risks':
+                    infoTitle.textContent = 'مخاطر الحوسبة السحابية';
+                    infoContent.innerHTML = `
+                        <ul>
+                            <li>اعتماد كامل على اتصال الإنترنت</li>
+                            <li>مخاوف تتعلق بالخصوصية والأمان</li>
+                            <li>اعتماد البيانات على طرف ثالث (مزود الخدمة)</li>
+                            <li>مخاطر فقدان البيانات في حال إغلاق الخدمة</li>
+                        </ul>
+                    `;
+                    break;
+                    
+                case 'benefits-speed':
+                    infoTitle.textContent = 'سرعة معالجة البيانات';
+                    infoContent.innerHTML = `
+                        <p>تمكن أي كمبيوتر من القيام بمعالجات معقدة، وتنفيذ العديد من المهام بسرعة هائلة ويعتمد ذلك على سرعة الإنترنت.</p>
+                        <p>تستفيد من قوة الخوادم العملاقة لدى مزودي الخدمة بدلاً من الاعتماد على قدرات الجهاز المحلي.</p>
+                    `;
+                    break;
+                    
+                case 'benefits-cost':
+                    infoTitle.textContent = 'خفض التكلفة المادية';
+                    infoContent.innerHTML = `
+                        <p>تساهم في الحد من شراء الأجهزة والبرمجيات والمصادر المختلفة مثل: الخوادم، ووسائط التخزين، مما يقلل من نفقات الشراء والصيانة.</p>
+                        <p>تعتمد على نموذج الدفع حسب الاستخدام مما يقلل من التكاليف الثابتة.</p>
+                    `;
+                    break;
+                    
+                case 'benefits-security':
+                    infoTitle.textContent = 'تأمين وحماية المعلومات';
+                    infoContent.innerHTML = `
+                        <p>تعمل على حفظ نسخ احتياطية للملفات لحفظ البيانات ضد فقدانها، وتوفير الصيانة الدورية والدعم الفني في حال حدوث أي خلل مفاجئ.</p>
+                        <p>توفر مزودو الخدمة مستويات عالية من الأمان والحماية للبيانات.</p>
+                    `;
+                    break;
+                    
+                case 'benefits-sharing':
+                    infoTitle.textContent = 'تبادل المعلومات ونشرها';
+                    infoContent.innerHTML = `
+                        <p>تمكنك من نشر البيانات والمعلومات ومشاركتها مع الآخرين بشكل فوري ومرن.</p>
+                        <p>تسهل التعاون بين الفرق والمجموعات عبر مشاركة الملفات والتطبيقات.</p>
+                    `;
+                    break;
+                    
+                case 'benefits-updates':
+                    infoTitle.textContent = 'التطوير والتحديث المستمر';
+                    infoContent.innerHTML = `
+                        <p>توفر لك تطوير الخدمات والبرامج المقدمة عبر السحابة الإلكترونية وتحديثها بشكل مستمر، وغالباً ما تكون هذه الخدمات مجانية.</p>
+                        <p>لا تحتاج إلى تنزيل التحديثات أو تثبيتها يدوياً.</p>
+                    `;
+                    break;
+                    
+                case 'benefits-access':
+                    infoTitle.textContent = 'سهولة الوصول إلى البيانات';
+                    infoContent.innerHTML = `
+                        <p>يمكنك الوصول إلى بياناتك الخاصة باستخدام أي جهاز حاسوب شخصي في أي وقت ومن أي مكان.</p>
+                        <p>لا تقتصر البيانات على جهاز معين بل تكون متاحة من أي مكان يتوفر فيه اتصال بالإنترنت.</p>
+                    `;
+                    break;
+                    
+                case 'components-infra':
+                    infoTitle.textContent = 'البنية التحتية';
+                    infoContent.innerHTML = `
+                        <p>الأنظمة والعناصر التي يُعتمد عليها في تقديم الخدمة مثل: أجهزة وخوادم، ومساحات تخزينية للمعلومات، وأنظمة تشغيل.</p>
+                        <p>تشكل الأساس المادي والبرمجي الذي تعمل عليه الخدمات السحابية.</p>
+                    `;
+                    break;
+                    
+                case 'components-user':
+                    infoTitle.textContent = 'المستخدم';
+                    infoContent.innerHTML = `
+                        <p>المستفيد من خدمات هذه التقنية من خلال أجهزة الحواسيب الشخصية المختلفة.</p>
+                        <p>يمكن أن يكون المستخدم فرداً أو مؤسسة أو جهة حكومية.</p>
+                    `;
+                    break;
+                    
+                case 'components-provider':
+                    infoTitle.textContent = 'مزود الخدمة';
+                    infoContent.innerHTML = `
+                        <p>الجهة التي توفر الخدمة السحابية عبر خوادم عملاقة في سعاتها التخزينية وسرعة معالجتها للبيانات ليستفيد منها المستخدمين.</p>
+                        <p>أمثلة: أمازون (Amazon Web Services)، مايكروسوفت (Microsoft Azure)، جوجل (Google Cloud)</p>
+                    `;
+                    break;
+                    
+                case 'components-apps':
+                    infoTitle.textContent = 'التطبيقات';
+                    infoContent.innerHTML = `
+                        <p>البرمجيات التي يستخدمها المستفيد في السحابة مثل: برمجيات معالجة النصوص والعروض التقديمية، وخدمات نقل المعلومات ومشاركتها.</p>
+                        <p>أمثلة: Google Docs, Microsoft 365, Dropbox</p>
+                    `;
+                    break;
+                    
+                case 'deployment-public':
+                    infoTitle.textContent = 'السحابة العامة';
+                    infoContent.innerHTML = `
+                        <p>خدمات سحابية يقدمها طرف ثالث لمستخدمين متعددين عبر الإنترنت.</p>
+                        <p>مميزات:</p>
+                        <ul>
+                            <li>تكلفة منخفضة</li>
+                            <li>لا تحتاج إلى صيانة</li>
+                            <li>قابلة للتوسع بسهولة</li>
+                        </ul>
+                        <p>أمثلة: AWS, Google Cloud, Microsoft Azure</p>
+                    `;
+                    break;
+                    
+                case 'deployment-private':
+                    infoTitle.textContent = 'السحابة الخاصة';
+                    infoContent.innerHTML = `
+                        <p>بنية تحتية سحابية مخصصة لمنظمة واحدة، قد تكون مديرة داخلياً أو من قبل طرف ثالث.</p>
+                        <p>مميزات:</p>
+                        <ul>
+                            <li>تحكم كامل في الأمان والخصوصية</li>
+                            <li>تخصيص عالي للاحتياجات</li>
+                        </ul>
+                        <p>تستخدمها عادة المؤسسات الكبيرة ذات المتطلبات الأمنية العالية.</p>
+                    `;
+                    break;
+                    
+                case 'deployment-hybrid':
+                    infoTitle.textContent = 'السحابة الهجينة';
+                    infoContent.innerHTML = `
+                        <p>مزيج بين السحابة العامة والخاصة، تسمح بتبادل البيانات والتطبيقات بينهما.</p>
+                        <p>مميزات:</p>
+                        <ul>
+                            <li>مرونة أكبر</li>
+                            <li>تحقيق التوازن بين التكلفة والأمان</li>
+                            <li>إمكانية تشغيل أحمال العمل الحساسة على السحابة الخاصة</li>
+                        </ul>
+                    `;
+                    break;
+                    
+                case 'service-iaas':
+                    infoTitle.textContent = 'خدمة البنية التحتية (IaaS)';
+                    infoContent.innerHTML = `
+                        <p>توفر موارد حاسوبية أساسية مثل الخوادم الافتراضية، التخزين، والشبكات عبر الإنترنت.</p>
+                        <p>مميزات:</p>
+                        <ul>
+                            <li>تحكم كامل في البنية التحتية</li>
+                            <li>مرونة عالية في التخصيص</li>
+                            <li>دفع فقط لما تستخدمه</li>
+                        </ul>
+                        <p>أمثلة: Amazon EC2, Microsoft Azure VMs, Google Compute Engine</p>
+                    `;
+                    break;
+                    
+                case 'service-paas':
+                    infoTitle.textContent = 'خدمة المنصات (PaaS)';
+                    infoContent.innerHTML = `
+                        <p>توفر بيئة كاملة لتطوير وتشغيل التطبيقات دون الحاجة لإدارة البنية التحتية الأساسية.</p>
+                        <p>مميزات:</p>
+                        <ul>
+                            <li>تسريع عملية تطوير التطبيقات</li>
+                            <li>لا حاجة لإدارة الخوادم أو أنظمة التشغيل</li>
+                            <li>تحديثات تلقائية</li>
+                        </ul>
+                        <p>أمثلة: Google App Engine, Microsoft Azure App Service, Heroku</p>
+                    `;
+                    break;
+                    
+                case 'service-saas':
+                    infoTitle.textContent = 'خدمة البرمجيات (SaaS)';
+                    infoContent.innerHTML = `
+                        <p>تطبيقات كاملة يتم تقديمها عبر الإنترنت، عادةً من خلال متصفح الويب.</p>
+                        <p>مميزات:</p>
+                        <ul>
+                            <li>لا حاجة للتثبيت أو الصيانة</li>
+                            <li>الوصول من أي جهاز</li>
+                            <li>تحديثات تلقائية</li>
+                        </ul>
+                        <p>أمثلة: Google Workspace, Microsoft 365, Salesforce, Dropbox</p>
+                    `;
+                    break;
+            }
+            
+            infoPanel.style.display = 'block';
+        }
+        
+        function hideInfo() {
+            document.getElementById('info-panel').style.display = 'none';
+            document.querySelectorAll('.node.active').forEach(node => {
+                node.classList.remove('active');
+            });
+        }
+    </script>
+</body>
+</html>
